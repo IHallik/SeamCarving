@@ -8,6 +8,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.PixelGrabber;
 import java.io.File;
 import java.io.IOException;
 
@@ -27,8 +30,7 @@ public class Main extends Application {
         return c.getBlue() + c.getGreen() + c.getRed();
     }
 
-    public Integer[] minPath(Image image) {
-
+    public Image valued(Image image) {
         PixelReader pixelReader = image.getPixelReader();
 
         // Create WritableImage
@@ -48,11 +50,16 @@ public class Main extends Application {
             }
         }
 
+        return wImage;
+    }
+
+    public Integer[] minPath(Image image) {
 
 
         Double shortestPathLength = Double.POSITIVE_INFINITY;
         Integer[] shortestPath = new Integer[(int) image.getHeight()];
-        pixelReader = wImage.getPixelReader();
+        Image valuedImg = valued(image);
+        PixelReader pixelReader = valuedImg.getPixelReader();
         for (int i = 0; i < image.getWidth(); i++) {
             Integer[] path = new Integer[(int) image.getHeight()];
             Double total = 0.0;
@@ -116,7 +123,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws IOException {
 
         // Create Image and ImageView objects
-        String f = "test.png"; // takes file from src folder
+        String f = "test3.png"; // takes file from src folder
         // using "file:../test-png" causes some problems with getting variables
         Image image = new Image(f);
         //Image image = new Image(getClass().getResourceAsStream("a/test.png"));
@@ -134,7 +141,7 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.show();
 
-        for (int i = 0; i < 80; i++) {
+        for (int i = 0; i < 150; i++) {
             PixelReader pixelReader = image.getPixelReader();
 
             Integer[] remove = minPath(image);
@@ -146,7 +153,7 @@ public class Main extends Application {
 
             for (int readY = 0; readY < image.getHeight(); readY++) {
                 int shift = 0;
-                for (int readX = 0; readX < image.getWidth()-1; readX++) {
+                for (int readX = 0; readX < image.getWidth() - 1; readX++) {
                     if (remove[readY] == readX) shift = 1;
                     pixelWriter.setColor(readX, readY, pixelReader.getColor(readX + shift, readY));
                 }
@@ -157,9 +164,10 @@ public class Main extends Application {
         }
 
         // save result
-        String format = "png" ;
+        String format = "png";
         File file = new File("out.png");
         ImageIO.write(SwingFXUtils.fromFXImage(image, null), format, file);
+
     }
 
     public static void main(String[] args) {
