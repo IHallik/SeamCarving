@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.util.stream.IntStream;
 
 public class Main extends Application {
 
@@ -55,11 +56,11 @@ public class Main extends Application {
         Double[] currentVal = new Double[(int) image.getWidth()];
         Double[] oldVal = new Double[(int) image.getWidth()];
 
-        Image valuedImg = valued(image);
-        PixelReader pixelReader = valuedImg.getPixelReader();
+
+        PixelReader pixelReader = image.getPixelReader();
 
         for (int i = 0; i < oldVal.length; i++) {
-            oldVal[i] = colValSum(pixelReader.getColor(i,0));
+            oldVal[i] = colValSum(pixelReader.getColor(i, 0));
         }
 
         for (int height = 0; height < image.getHeight(); height++) {
@@ -102,7 +103,7 @@ public class Main extends Application {
         int minI = -1;
         double minVal = Integer.MAX_VALUE;
         for (int i = 0; i < currentVal.length; i++) {
-            if (currentVal[i]<minVal){
+            if (currentVal[i] < minVal) {
                 minI = i;
                 minVal = currentVal[i];
             }
@@ -111,7 +112,7 @@ public class Main extends Application {
         // find the path
         Integer[] shortestPath = new Integer[(int) image.getHeight()];
 
-        for (int i = (int) image.getHeight()-1; i >= 0; i--) {
+        for (int i = (int) image.getHeight() - 1; i >= 0; i--) {
             shortestPath[i] = minI;
             minI += pathMatrix[minI][i];
         }
@@ -142,27 +143,49 @@ public class Main extends Application {
         primaryStage.show();
 
         long startTime = System.nanoTime();
-        for (int i = 0; i < image.getWidth()-image.getHeight(); i++) {
-            PixelReader pixelReader = image.getPixelReader();
-
-            Integer[] remove = minPath(image);
+        long endTime = System.nanoTime();
+        Double valueTime = 0.0;
+        Double seamTime = 0.0;
+        Double resizeTime = 0.0;
+        for (int i = 0; i < image.getWidth() - image.getHeight(); i++) {
+            // find valued
+            startTime = System.nanoTime();
+            Image valuedImg = valued(image);
+            endTime = System.nanoTime();
+            valueTime += (endTime - startTime) / 1000000;
+            startTime = endTime;
+            // find min path
+            Integer[] remove = minPath(valuedImg);
+            endTime = System.nanoTime();
+            seamTime += (endTime - startTime) / 1000000;
+            startTime = endTime;
+            // create new smaller image
             WritableImage up = new WritableImage(
                     (int) image.getWidth() - 1,
                     (int) image.getHeight());
 
+            PixelReader pixelReader = image.getPixelReader();
             PixelWriter pixelWriter = up.getPixelWriter();
-
-            for (int readY = 0; readY < image.getHeight(); readY++) {
-                int shift = 0;
-                for (int readX = 0; readX < image.getWidth() - 1; readX++) {
-                    if (remove[readY] == readX) shift = 1;
-                    pixelWriter.setColor(readX, readY, pixelReader.getColor(readX + shift, readY));
-                }
-            }
+            Image finalImage = image;
+            IntStream
+                    .range(0, (int) image.getHeight())
+                    .parallel()
+                    .forEach(readY ->{
+                        int shift = 0;
+                        for (int readX = 0; readX < finalImage.getWidth() - 1; readX++) {
+                            if (remove[readY] == readX) shift = 1;
+                            pixelWriter.setColor(readX, readY, pixelReader.getColor(readX + shift, readY));
+                        }
+                    });
             image = up;
+            endTime = System.nanoTime();
+            resizeTime += (endTime - startTime) / 1000000;
         }
-        long endTime = System.nanoTime();
-        System.out.println((endTime - startTime)/1000000);
+        //long endTime = System.nanoTime();
+        //System.out.println((endTime - startTime)/1000000);
+        System.out.println("Val time\t" + valueTime);
+        System.out.println("Seam time\t" + seamTime);
+        System.out.println("Resize time\t" + resizeTime);
         System.out.println("save");
         imageView.setImage(image);
         primaryStage.show();
