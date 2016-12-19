@@ -8,9 +8,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.image.BufferedImage;
-import java.awt.image.PixelGrabber;
 import java.io.File;
 import java.io.IOException;
 
@@ -54,68 +51,71 @@ public class Main extends Application {
     }
 
     public Integer[] minPath(Image image) {
+        Integer[][] pathMatrix = new Integer[(int) image.getWidth()][(int) image.getHeight()];
+        Double[] currentVal = new Double[(int) image.getWidth()];
+        Double[] oldVal = new Double[(int) image.getWidth()];
 
-
-        Double shortestPathLength = Double.POSITIVE_INFINITY;
-        Integer[] shortestPath = new Integer[(int) image.getHeight()];
         Image valuedImg = valued(image);
         PixelReader pixelReader = valuedImg.getPixelReader();
-        for (int i = 0; i < image.getWidth(); i++) {
-            Integer[] path = new Integer[(int) image.getHeight()];
-            Double total = 0.0;
-            int last = i;
 
-            path[0] = last;
-            for (int j = 1; j < image.getHeight(); j++) {
-                int next = -1;
+        for (int i = 0; i < oldVal.length; i++) {
+            oldVal[i] = colValSum(pixelReader.getColor(i,0));
+        }
+
+        for (int height = 0; height < image.getHeight(); height++) {
+
+            for (int width = 0; width < image.getWidth(); width++) {
+                int next = Integer.MAX_VALUE;
                 double nextVal = Double.POSITIVE_INFINITY;
-                // look down left
-                if (last - 1 > 0) {
-                    if (colValSum(pixelReader.getColor(last - 1, j)) < nextVal) {
-                        next = last - 1;
-                        nextVal = colValSum(pixelReader.getColor(next, j));
-                    }
-                }
-                // look down
-                if (colValSum(pixelReader.getColor(last, j)) < nextVal) {
-                    next = last;
-                    nextVal = colValSum(pixelReader.getColor(next, j));
-                }
-                // look down right
-                if (last + 1 < image.getWidth()) {
-                    if (colValSum(pixelReader.getColor(last + 1, j)) < nextVal) {
-                        next = last + 1;
-                        nextVal = colValSum(pixelReader.getColor(next, j));
+                // look up left
+                if (width - 1 > 0) {
+                    if (oldVal[width - 1] < nextVal) {
+                        next = -1;
+                        nextVal = oldVal[width - 1];
                     }
                 }
 
-                total += nextVal;
-                path[j] = next;
-                last = next;
-            }
-            if (total < shortestPathLength) {
-                shortestPathLength = total;
-                shortestPath = path;
-            }
-        }
-        /*
+                // look up
+                if (oldVal[width] < nextVal) {
+                    next = 0;
+                    nextVal = oldVal[width];
 
-        //Initial test code to see path in red
+                }
 
-        WritableImage wImage = new WritableImage(
-                (int) image.getWidth(),
-                (int) image.getHeight());
-        PixelWriter pixelWriter = wImage.getPixelWriter();
-        for (int readY = 0; readY < image.getHeight(); readY++) {
-            for (int readX = 0; readX < image.getWidth(); readX++) {
-                pixelWriter.setColor(readX, readY, pixelReader.getColor(readX,readY));
+                // look up right
+                if (width + 1 < image.getWidth()) {
+                    if (oldVal[width + 1] < nextVal) {
+                        next = 1;
+                        nextVal = oldVal[width + 1];
+                    }
+                }
+
+                // updating current
+                currentVal[width] = nextVal + colValSum(pixelReader.getColor(width, height));
+                // updating path matrix
+                pathMatrix[width][height] = next;
+            }
+            oldVal = currentVal.clone();
+        }
+
+        // find lowest value
+        int minI = -1;
+        double minVal = Integer.MAX_VALUE;
+        for (int i = 0; i < currentVal.length; i++) {
+            if (currentVal[i]<minVal){
+                minI = i;
+                minVal = currentVal[i];
             }
         }
-        for (int i = 0; i < image.getHeight(); i++) {
-            pixelWriter.setColor(shortestPath[i], i, Color.RED);
+
+        // find the path
+        Integer[] shortestPath = new Integer[(int) image.getHeight()];
+
+        for (int i = (int) image.getHeight()-1; i >= 0; i--) {
+            shortestPath[i] = minI;
+            minI += pathMatrix[minI][i];
         }
-        return wImage;
-        */
+
         return shortestPath;
     }
 
@@ -123,7 +123,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws IOException {
 
         // Create Image and ImageView objects
-        String f = "test3.png"; // takes file from src folder
+        String f = "test_large.png"; // takes file from src folder
         // using "file:../test-png" causes some problems with getting variables
         Image image = new Image(f);
         //Image image = new Image(getClass().getResourceAsStream("a/test.png"));
@@ -141,7 +141,8 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.show();
 
-        for (int i = 0; i < 150; i++) {
+        long startTime = System.nanoTime();
+        for (int i = 0; i < image.getWidth()-image.getHeight(); i++) {
             PixelReader pixelReader = image.getPixelReader();
 
             Integer[] remove = minPath(image);
@@ -159,10 +160,12 @@ public class Main extends Application {
                 }
             }
             image = up;
-            imageView.setImage(image);
-            primaryStage.show();
         }
-
+        long endTime = System.nanoTime();
+        System.out.println((endTime - startTime)/1000000);
+        System.out.println("save");
+        imageView.setImage(image);
+        primaryStage.show();
         // save result
         String format = "png";
         File file = new File("out.png");
