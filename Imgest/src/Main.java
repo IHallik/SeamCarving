@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Main extends Application {
@@ -50,6 +52,63 @@ public class Main extends Application {
 
         return wImage;
     }
+
+    public Integer[] minPath2(Image image) {
+        Integer[][] pathMatrix = new Integer[(int) image.getWidth()][(int) image.getHeight()];
+        Double[] dynamic = new Double[(int) image.getWidth() + 2];
+
+        PixelReader pixelReader = image.getPixelReader();
+
+        for (int i = 0; i < dynamic.length - 2; i++) {
+            dynamic[i] = colValSum(pixelReader.getColor(i, 0));
+        }
+        for (int height = 0; height < image.getHeight(); height++) {
+
+            // shift array ->
+            for (int i = dynamic.length - 1; i > 0; i--) {
+                dynamic[i] = dynamic[i - 1];
+            }
+            dynamic[0] = Double.POSITIVE_INFINITY;
+            dynamic[dynamic.length - 1] = Double.POSITIVE_INFINITY;
+
+            for (int width = 0; width < image.getWidth(); width++) {
+                int next = Integer.MAX_VALUE;
+                double nextVal = Double.POSITIVE_INFINITY;
+                for (int i = 0; i < 3; i++) {
+                    if (dynamic[width + i] < nextVal) {
+                        nextVal = dynamic[width + i];
+                        next = i - 1;
+                    }
+                }
+
+                dynamic[width] = nextVal + colValSum(pixelReader.getColor(width, height));
+                // updating path matrix
+                pathMatrix[width][height] = next;
+            }
+        }
+
+        // find lowest value
+        int minI = -1;
+        double minVal = Integer.MAX_VALUE;
+        for (int i = 0; i < dynamic.length - 2; i++) {
+            if (dynamic[i] < minVal) {
+                minI = i;
+                minVal = dynamic[i];
+            }
+        }
+
+        ///-----------------------------------------------------------------------
+        // find the path
+        Integer[] shortestPath = new Integer[(int) image.getHeight()];
+
+        for (int i = (int) image.getHeight() - 1; i >= 0; i--) {
+            shortestPath[i] = minI;
+            minI += pathMatrix[minI][i];
+        }
+
+        return shortestPath;
+    }
+
 
     public Integer[] minPath(Image image) {
         Integer[][] pathMatrix = new Integer[(int) image.getWidth()][(int) image.getHeight()];
@@ -147,7 +206,8 @@ public class Main extends Application {
         Double valueTime = 0.0;
         Double seamTime = 0.0;
         Double resizeTime = 0.0;
-        for (int i = 0; i < image.getWidth() - image.getHeight(); i++) {
+        int squareHelper = (int) (image.getWidth() - image.getHeight());
+        for (int i = 0; i < squareHelper; i++) {
             // find valued
             startTime = System.nanoTime();
             Image valuedImg = valued(image);
@@ -155,7 +215,9 @@ public class Main extends Application {
             valueTime += (endTime - startTime) / 1000000;
             startTime = endTime;
             // find min path
-            Integer[] remove = minPath(valuedImg);
+            Integer[] remove = minPath2(valuedImg);
+            //Integer[] remove2 = minPath2(valuedImg);
+
             endTime = System.nanoTime();
             seamTime += (endTime - startTime) / 1000000;
             startTime = endTime;
@@ -170,7 +232,7 @@ public class Main extends Application {
             IntStream
                     .range(0, (int) image.getHeight())
                     .parallel()
-                    .forEach(readY ->{
+                    .forEach(readY -> {
                         int shift = 0;
                         for (int readX = 0; readX < finalImage.getWidth() - 1; readX++) {
                             if (remove[readY] == readX) shift = 1;
