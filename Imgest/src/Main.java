@@ -109,7 +109,6 @@ public class Main extends Application {
         return shortestPath;
     }
 
-
     public Integer[] minPath(Image image) {
         Integer[][] pathMatrix = new Integer[(int) image.getWidth()][(int) image.getHeight()];
         Double[] currentVal = new Double[(int) image.getWidth()];
@@ -179,11 +178,159 @@ public class Main extends Application {
         return shortestPath;
     }
 
+    public Image resize(Image image, Integer seamesToRemove) {
+
+        Image valued = valued(image);
+        Boolean[][] ignoreMatrix = new Boolean[(int) valued.getWidth()][(int) valued.getHeight()];
+        IntStream
+                .range(0, (int) valued.getHeight())
+                .parallel()
+                .forEach(readY -> IntStream
+                        .range(0, (int) valued.getWidth())
+                        .forEach(readX -> ignoreMatrix[readX][readY] = Boolean.FALSE));
+
+        Integer[][] pathMatrix = new Integer[(int) valued.getWidth()][(int) valued.getHeight()];
+        Double[] currentVal = new Double[(int) valued.getWidth()];
+        Double[] oldVal = new Double[(int) valued.getWidth()];
+
+
+        PixelReader pixelReader = valued.getPixelReader();
+        for (int seam = 0; seam < seamesToRemove; seam++) {
+            // initial nothing removed
+            for (int i = 0; i < oldVal.length; i++) {
+                oldVal[i] = colValSum(pixelReader.getColor(i, 0));
+                pathMatrix[i][0] = 0;
+            }
+
+            for (int height = 1; height < valued.getHeight(); height++) {
+                // figure the fucking skipping out
+                for (int width = 0; width < valued.getWidth(); width++) {
+                    int next = Integer.MAX_VALUE;
+                    double nextVal = Double.POSITIVE_INFINITY;
+
+                    // look up left- the counter thing till no fail
+                    int skip = -1;
+                    while (width + skip > 0 && ignoreMatrix[width + skip][height - 1]) {
+                        skip--;
+                    }
+                    if (width + skip > 0) {
+                        if (oldVal[width + skip] < nextVal) {
+                            next = skip;
+                            nextVal = oldVal[width + next];
+                        }
+                    }
+
+                    // look up if there is non above we just lose one diagonal
+                    if (!ignoreMatrix[width][height - 1]) {
+                        if (oldVal[width] < nextVal) {
+                            next = 0;
+                            nextVal = oldVal[width];
+                        }
+                    }
+
+                    // look up right
+                    skip = 1;
+                    while (width + skip < valued.getWidth() && ignoreMatrix[width + skip][height - 1]) {
+                        skip++;
+                    }
+                    if (width + skip < valued.getWidth()) {
+                        if (oldVal[width + skip] < nextVal) {
+                            next = skip;
+                            nextVal = oldVal[width + next];
+                        }
+                    }
+
+                    // updating current
+                    currentVal[width] = nextVal + colValSum(pixelReader.getColor(width, height));
+                    // updating path matrix
+                    pathMatrix[width][height] = next;
+                }
+                oldVal = currentVal.clone();
+            }
+
+            // find lowest value
+            int minI = -1;
+            double minVal = Integer.MAX_VALUE;
+            for (int i = 0; i < currentVal.length; i++) {
+                if (currentVal[i] < minVal && !ignoreMatrix[i][(int) valued.getHeight() - 1]) {
+                    minI = i;
+                    minVal = currentVal[i];
+                }
+            }
+
+            for (int i = (int) valued.getHeight() - 1; i >= 0; i--) {
+                ignoreMatrix[minI][i] = Boolean.TRUE;
+                minI += pathMatrix[minI][i];
+            }
+        }
+        // clean the stuff and make new image
+        // create new smaller image
+
+        WritableImage resized = new WritableImage(
+                (int) image.getWidth() - seamesToRemove,
+                (int) image.getHeight());
+
+        PixelWriter pixelWriter = resized.getPixelWriter();
+        PixelReader pixelReaderResize = image.getPixelReader();
+        Image finalImage = image;
+        IntStream
+                .range(0, (int) image.getHeight())
+                .parallel()
+                .forEach(readY -> {
+                    int shift = 0;
+                    for (int readX = 0; readX < finalImage.getWidth() - seamesToRemove; readX++) {
+                        while (ignoreMatrix[readX + shift][readY]) {
+                            shift++;
+                        }
+                        pixelWriter.setColor(readX, readY, pixelReaderResize.getColor(readX + shift, readY));
+                    }
+                });
+
+
+        /*
+        //  paint removed seams red
+
+        WritableImage resized = new WritableImage(
+                (int) valued.getWidth(),
+                (int) valued.getHeight());
+
+        PixelWriter pixelWriter = resized.getPixelWriter();
+        PixelReader pixelReaderResize = image.getPixelReader();
+        Image finalImage = valued;
+        IntStream
+                .range(0, (int) valued.getHeight())
+                .parallel()
+                .forEach(readY -> {
+                    int shift = 0;
+                    for (int readX = 0; readX < finalImage.getWidth(); readX++) {
+                        if (ignoreMatrix[readX][readY]) {
+                            pixelWriter.setColor(readX, readY,Color.RED);
+                        } else {
+                            pixelWriter.setColor(readX, readY, pixelReaderResize.getColor(readX + shift, readY));
+                        }
+                    }
+                });
+
+        for (int y = 0; y < (int) valued.getHeight(); y++) {
+            int s = 0;
+            for (int x = 0; x < (int) valued.getWidth(); x++) {
+                if (ignoreMatrix[x][y]) s++;
+            }
+        }
+        */
+        return resized;
+    }
+
     @Override
     public void start(Stage primaryStage) throws IOException {
 
         // Create Image and ImageView objects
-        String f = "test_large.png"; // takes file from src folder
+        String f = null;
+        if (false) {
+            f = "test.png"; // takes file from src folder
+        } else {
+            f = "test_large.png"; // takes file from src folder
+        }
         // using "file:../test-png" causes some problems with getting variables
         Image image = new Image(f);
         //Image image = new Image(getClass().getResourceAsStream("a/test.png"));
@@ -215,7 +362,7 @@ public class Main extends Application {
             valueTime += (endTime - startTime) / 1000000;
             startTime = endTime;
             // find min path
-            Integer[] remove = minPath2(valuedImg);
+            Integer[] remove = minPath(valuedImg);
             //Integer[] remove2 = minPath2(valuedImg);
 
             endTime = System.nanoTime();
@@ -251,11 +398,17 @@ public class Main extends Application {
         System.out.println("save");
         imageView.setImage(image);
         primaryStage.show();
+        /*
+        // resize example
+        image = resize(image, squareHelper);
+        imageView.setImage(image);
+        primaryStage.show();
+        */
         // save result
         String format = "png";
         File file = new File("out.png");
         ImageIO.write(SwingFXUtils.fromFXImage(image, null), format, file);
-
+        System.out.println("no crash");
     }
 
     public static void main(String[] args) {
