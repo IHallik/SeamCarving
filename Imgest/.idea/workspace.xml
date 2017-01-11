@@ -62,24 +62,18 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="143">
-              <caret line="328" column="17" selection-start-line="328" selection-start-column="17" selection-end-line="328" selection-end-column="17" />
+            <state relative-caret-position="-923">
+              <caret line="591" column="8" selection-start-line="591" selection-start-column="8" selection-end-line="591" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#deferenceCalculator#0;class#Main#0" expanded="false" />
                 <element signature="method#valued#0;class#Main#0" expanded="false" />
+                <element signature="method#valued2#0;class#Main#0" expanded="false" />
                 <element signature="method#minPath2#0;class#Main#0" expanded="false" />
+                <element signature="method#minPath#0;class#Main#0" expanded="false" />
+                <element signature="method#resizeHelper#0;class#Main#0" expanded="false" />
+                <element signature="method#resizeHelperX#0;class#Main#0" expanded="false" />
+                <element signature="method#resizeHelperY#0;class#Main#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Thread.java" pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/src.zip!/java/lang/Thread.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="169">
-              <caret line="744" column="0" selection-start-line="744" selection-start-column="0" selection-end-line="744" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -143,10 +137,10 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane />
       </pane>
+      <pane id="Scratches" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -623,7 +617,7 @@
     <option name="totallyTimeSpent" value="1302000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="54" y="-8" width="1554" height="916" extended-state="7" />
+    <frame x="54" y="-8" width="1554" height="916" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -657,6 +651,38 @@
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39454094" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32754344" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3337469" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23927177" sideWeight="0.6703755" order="0" side_tool="true" content_ui="combo" />
+      <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -671,7 +697,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="2" />
+      <option name="time" value="5" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -686,9 +712,13 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#deferenceCalculator#0;class#Main#0" expanded="false" />
             <element signature="method#valued#0;class#Main#0" expanded="false" />
+            <element signature="method#valued2#0;class#Main#0" expanded="false" />
             <element signature="method#minPath2#0;class#Main#0" expanded="false" />
+            <element signature="method#minPath#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelper#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperX#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperY#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -699,9 +729,13 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#deferenceCalculator#0;class#Main#0" expanded="false" />
             <element signature="method#valued#0;class#Main#0" expanded="false" />
+            <element signature="method#valued2#0;class#Main#0" expanded="false" />
             <element signature="method#minPath2#0;class#Main#0" expanded="false" />
+            <element signature="method#minPath#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelper#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperX#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperY#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -712,9 +746,13 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#deferenceCalculator#0;class#Main#0" expanded="false" />
             <element signature="method#valued#0;class#Main#0" expanded="false" />
+            <element signature="method#valued2#0;class#Main#0" expanded="false" />
             <element signature="method#minPath2#0;class#Main#0" expanded="false" />
+            <element signature="method#minPath#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelper#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperX#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperY#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -725,24 +763,14 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#deferenceCalculator#0;class#Main#0" expanded="false" />
             <element signature="method#valued#0;class#Main#0" expanded="false" />
+            <element signature="method#valued2#0;class#Main#0" expanded="false" />
             <element signature="method#minPath2#0;class#Main#0" expanded="false" />
+            <element signature="method#minPath#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelper#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperX#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperY#0;class#Main#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/javafx-src.zip!/com/sun/prism/Image.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15844">
-          <caret line="932" column="0" selection-start-line="932" selection-start-column="0" selection-end-line="932" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -752,36 +780,13 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#deferenceCalculator#0;class#Main#0" expanded="false" />
             <element signature="method#valued#0;class#Main#0" expanded="false" />
+            <element signature="method#valued2#0;class#Main#0" expanded="false" />
             <element signature="method#minPath2#0;class#Main#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/javafx-src.zip!/com/sun/prism/Image.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15844">
-          <caret line="932" column="0" selection-start-line="932" selection-start-column="0" selection-end-line="932" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#deferenceCalculator#0;class#Main#0" expanded="false" />
-            <element signature="method#valued#0;class#Main#0" expanded="false" />
-            <element signature="method#minPath2#0;class#Main#0" expanded="false" />
+            <element signature="method#minPath#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelper#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperX#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperY#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -806,9 +811,13 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#deferenceCalculator#0;class#Main#0" expanded="false" />
             <element signature="method#valued#0;class#Main#0" expanded="false" />
+            <element signature="method#valued2#0;class#Main#0" expanded="false" />
             <element signature="method#minPath2#0;class#Main#0" expanded="false" />
+            <element signature="method#minPath#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelper#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperX#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperY#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -833,9 +842,13 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#deferenceCalculator#0;class#Main#0" expanded="false" />
             <element signature="method#valued#0;class#Main#0" expanded="false" />
+            <element signature="method#valued2#0;class#Main#0" expanded="false" />
             <element signature="method#minPath2#0;class#Main#0" expanded="false" />
+            <element signature="method#minPath#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelper#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperX#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperY#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -860,9 +873,13 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#deferenceCalculator#0;class#Main#0" expanded="false" />
             <element signature="method#valued#0;class#Main#0" expanded="false" />
+            <element signature="method#valued2#0;class#Main#0" expanded="false" />
             <element signature="method#minPath2#0;class#Main#0" expanded="false" />
+            <element signature="method#minPath#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelper#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperX#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperY#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -887,9 +904,13 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#deferenceCalculator#0;class#Main#0" expanded="false" />
             <element signature="method#valued#0;class#Main#0" expanded="false" />
+            <element signature="method#valued2#0;class#Main#0" expanded="false" />
             <element signature="method#minPath2#0;class#Main#0" expanded="false" />
+            <element signature="method#minPath#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelper#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperX#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperY#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -914,9 +935,75 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#deferenceCalculator#0;class#Main#0" expanded="false" />
             <element signature="method#valued#0;class#Main#0" expanded="false" />
+            <element signature="method#valued2#0;class#Main#0" expanded="false" />
             <element signature="method#minPath2#0;class#Main#0" expanded="false" />
+            <element signature="method#minPath#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelper#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperX#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperY#0;class#Main#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/javafx-src.zip!/com/sun/prism/Image.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15844">
+          <caret line="932" column="0" selection-start-line="932" selection-start-column="0" selection-end-line="932" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#valued#0;class#Main#0" expanded="false" />
+            <element signature="method#valued2#0;class#Main#0" expanded="false" />
+            <element signature="method#minPath2#0;class#Main#0" expanded="false" />
+            <element signature="method#minPath#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelper#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperX#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperY#0;class#Main#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/javafx-src.zip!/com/sun/prism/Image.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15844">
+          <caret line="932" column="0" selection-start-line="932" selection-start-column="0" selection-end-line="932" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#valued#0;class#Main#0" expanded="false" />
+            <element signature="method#valued2#0;class#Main#0" expanded="false" />
+            <element signature="method#minPath2#0;class#Main#0" expanded="false" />
+            <element signature="method#minPath#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelper#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperX#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperY#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -941,9 +1028,13 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#deferenceCalculator#0;class#Main#0" expanded="false" />
             <element signature="method#valued#0;class#Main#0" expanded="false" />
+            <element signature="method#valued2#0;class#Main#0" expanded="false" />
             <element signature="method#minPath2#0;class#Main#0" expanded="false" />
+            <element signature="method#minPath#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelper#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperX#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperY#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -968,9 +1059,13 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#deferenceCalculator#0;class#Main#0" expanded="false" />
             <element signature="method#valued#0;class#Main#0" expanded="false" />
+            <element signature="method#valued2#0;class#Main#0" expanded="false" />
             <element signature="method#minPath2#0;class#Main#0" expanded="false" />
+            <element signature="method#minPath#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelper#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperX#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperY#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -998,9 +1093,13 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#deferenceCalculator#0;class#Main#0" expanded="false" />
             <element signature="method#valued#0;class#Main#0" expanded="false" />
+            <element signature="method#valued2#0;class#Main#0" expanded="false" />
             <element signature="method#minPath2#0;class#Main#0" expanded="false" />
+            <element signature="method#minPath#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelper#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperX#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperY#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1028,9 +1127,13 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#deferenceCalculator#0;class#Main#0" expanded="false" />
             <element signature="method#valued#0;class#Main#0" expanded="false" />
+            <element signature="method#valued2#0;class#Main#0" expanded="false" />
             <element signature="method#minPath2#0;class#Main#0" expanded="false" />
+            <element signature="method#minPath#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelper#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperX#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperY#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1058,9 +1161,13 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#deferenceCalculator#0;class#Main#0" expanded="false" />
             <element signature="method#valued#0;class#Main#0" expanded="false" />
+            <element signature="method#valued2#0;class#Main#0" expanded="false" />
             <element signature="method#minPath2#0;class#Main#0" expanded="false" />
+            <element signature="method#minPath#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelper#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperX#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperY#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1088,9 +1195,13 @@
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#deferenceCalculator#0;class#Main#0" expanded="false" />
             <element signature="method#valued#0;class#Main#0" expanded="false" />
+            <element signature="method#valued2#0;class#Main#0" expanded="false" />
             <element signature="method#minPath2#0;class#Main#0" expanded="false" />
+            <element signature="method#minPath#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelper#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperX#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperY#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1140,19 +1251,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="169">
           <caret line="744" column="0" selection-start-line="744" selection-start-column="0" selection-end-line="744" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="328" column="17" selection-start-line="328" selection-start-column="17" selection-end-line="328" selection-end-column="17" />
+        <state relative-caret-position="-923">
+          <caret line="591" column="8" selection-start-line="591" selection-start-column="8" selection-end-line="591" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#deferenceCalculator#0;class#Main#0" expanded="false" />
             <element signature="method#valued#0;class#Main#0" expanded="false" />
+            <element signature="method#valued2#0;class#Main#0" expanded="false" />
             <element signature="method#minPath2#0;class#Main#0" expanded="false" />
+            <element signature="method#minPath#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelper#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperX#0;class#Main#0" expanded="false" />
+            <element signature="method#resizeHelperY#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>

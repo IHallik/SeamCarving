@@ -28,6 +28,15 @@ public class Main extends Application {
         return c.getBlue() + c.getGreen() + c.getRed();
     }
 
+    public Color colValAvg(Color c1, Color c2) {
+        Color c = Color.color(
+                (c1.getRed() + c2.getRed()) / 2.0,
+                (c1.getGreen() + c2.getGreen()) / 2.0,
+                (c1.getBlue() + c2.getBlue()) / 2.0
+        );
+        return c;
+    }
+
     public Image valued(Image image) {
         PixelReader pixelReader = image.getPixelReader();
 
@@ -48,6 +57,28 @@ public class Main extends Application {
             }
         }
 
+        return wImage;
+    }
+
+    public Image valued2(Image image) {
+        PixelReader pixelReader = image.getPixelReader();
+
+        // Create WritableImage
+        WritableImage wImage = new WritableImage(
+                (int) image.getWidth(),
+                (int) image.getHeight());
+        PixelWriter pixelWriter = wImage.getPixelWriter();
+
+        // getting our important
+        Color color0 = Color.color(0.5, 0.5, 0.5);
+        for (int readX = 0; readX < image.getWidth(); readX++) {
+            for (int readY = 0; readY < image.getHeight(); readY++) {
+                Color color = pixelReader.getColor(readX, readY);
+                Color newColor = deferenceCalculator(color0, color);
+                pixelWriter.setColor(readX, readY, newColor);
+                color0 = color;
+            }
+        }
         return wImage;
     }
 
@@ -176,8 +207,157 @@ public class Main extends Application {
         return shortestPath;
     }
 
-    public Image resize(Image image, Integer seamesToRemove) {
+    public Image resizeHelper(Image image, Integer seamesToRemoveX, Integer seamesToRemoveY, Boolean[][] ignoreMatrix, Boolean[][] ignoreMatrix2) {
+        WritableImage resized = new WritableImage(
+                (int) image.getWidth() - seamesToRemoveX,
+                (int) image.getHeight());
 
+        WritableImage resized2 = new WritableImage(
+                (int) image.getWidth() - seamesToRemoveX,
+                (int) image.getHeight() - seamesToRemoveY);
+
+
+        PixelWriter pixelWriter = resized.getPixelWriter();
+        PixelReader pixelReaderResize = image.getPixelReader();
+        Integer xSize = (int) image.getWidth();
+        Integer ySize = (int) image.getHeight();
+        Boolean[][] ignoreMatrixHelper = new Boolean[xSize][ySize];
+        IntStream
+                .range(0, xSize - seamesToRemoveX)
+                .parallel()
+                .forEach(readY -> IntStream
+                        .range(0, ySize)
+                        .forEach(readX -> ignoreMatrixHelper[readX][readY] = Boolean.FALSE));
+
+
+        for (int y = 0; y < ySize; y++) {
+            int skip = 0;
+            for (int x = 0; x < xSize - seamesToRemoveX; x++) {
+                while (x + skip < xSize && ignoreMatrix[x + skip][y]) {
+                    skip++;
+                }
+                pixelWriter.setColor(x, y, pixelReaderResize.getColor(x + skip, y));
+                if (ignoreMatrix2[x + skip][y]) ignoreMatrixHelper[x][y] = true;
+            }
+
+                /*
+                while (y + ySift[x] < image.getHeight() && ignoreMatrix2[x + xSift[y]][y + ySift[x]]) {
+                    ySift[x]++;
+                }
+                */
+        }
+        PixelReader pixelReaderResize2 = resized.getPixelReader();
+        pixelWriter = resized2.getPixelWriter();
+        try {
+
+            for (int x = 0; x < xSize - seamesToRemoveX; x++) {
+                int skip = 0;
+                for (int y = 0; y < ySize - seamesToRemoveY; y++) {
+                    while (y + skip < ySize && ignoreMatrixHelper[x][y + skip]) {
+                        skip++;
+                    }
+                    pixelWriter.setColor(x, y, pixelReaderResize2.getColor(x, y + skip));
+                }
+                System.out.println(skip);
+
+                /*
+                while (y + ySift[x] < image.getHeight() && ignoreMatrix2[x + xSift[y]][y + ySift[x]]) {
+                    ySift[x]++;
+                }
+                */
+            }
+        } catch (Exception e) {
+        }
+        ;
+        return image;
+    }
+
+    public Image resizeHelperX(Image image, Integer seamesToRemoveX, Boolean[][] ignoreMatrix) {
+        WritableImage resized = new WritableImage(
+                (int) image.getWidth() - seamesToRemoveX,
+                (int) image.getHeight());
+
+        PixelWriter pixelWriter = resized.getPixelWriter();
+        PixelReader pixelReaderResize = image.getPixelReader();
+        Integer xSize = (int) image.getWidth();
+        Integer ySize = (int) image.getHeight();
+
+        for (int y = 0; y < ySize; y++) {
+            int skip = 0;
+            for (int x = 0; x < xSize - seamesToRemoveX; x++) {
+                while (x + skip < xSize && ignoreMatrix[x + skip][y]) {
+                    skip++;
+                }
+                pixelWriter.setColor(x, y, pixelReaderResize.getColor(x + skip, y));
+            }
+
+                /*
+                while (y + ySift[x] < image.getHeight() && ignoreMatrix2[x + xSift[y]][y + ySift[x]]) {
+                    ySift[x]++;
+                }
+                */
+        }
+
+        return resized;
+    }
+
+    public Image resizeHelperX2(Image image, Integer seamesToRemoveX, Boolean[][] ignoreMatrix) {
+        WritableImage resized = new WritableImage(
+                (int) image.getWidth() + seamesToRemoveX,
+                (int) image.getHeight());
+
+        PixelWriter pixelWriter = resized.getPixelWriter();
+        PixelReader pixelReaderResize = image.getPixelReader();
+        Integer xSize = (int) image.getWidth();
+        Integer ySize = (int) image.getHeight();
+
+        for (int y = 0; y < ySize; y++) {
+            int skip = 0;
+            for (int x = 0; x < xSize; x++) {
+                if (ignoreMatrix[x][y]) {
+                    if (x == 0) {
+                        pixelWriter.setColor(x + skip, y, pixelReaderResize.getColor(x, y));
+                    } else{
+                        pixelWriter.setColor(x + skip, y, colValAvg(pixelReaderResize.getColor(x - 1, y), pixelReaderResize.getColor(x, y)));
+                    }
+                    skip++;
+                }
+                pixelWriter.setColor(x + skip, y, pixelReaderResize.getColor(x, y));
+            }
+                /*
+                while (y + ySift[x] < image.getHeight() && ignoreMatrix2[x + xSift[y]][y + ySift[x]]) {
+                    ySift[x]++;
+                }
+                */
+        }
+
+        return resized;
+    }
+
+    public Image resizeHelperY(Image image, Integer seamesToRemoveY, Boolean[][] ignoreMatrix) {
+        WritableImage resized = new WritableImage(
+                (int) image.getWidth(),
+                (int) image.getHeight() - seamesToRemoveY);
+
+        PixelWriter pixelWriter = resized.getPixelWriter();
+        PixelReader pixelReaderResize = image.getPixelReader();
+        Integer xSize = (int) image.getWidth();
+        Integer ySize = (int) image.getHeight();
+
+
+        for (int x = 0; x < xSize; x++) {
+            int skip = 0;
+            for (int y = 0; y < ySize - seamesToRemoveY; y++) {
+                while (y + skip < ySize && ignoreMatrix[x][y + skip]) {
+                    skip++;
+                }
+                pixelWriter.setColor(x, y, pixelReaderResize.getColor(x, y + skip));
+            }
+        }
+        return resized;
+    }
+
+    public Image resize(Image image, Integer seamesToRemoveX, Integer seamesToRemoveY) {
         Image valued = valued(image);
         Boolean[][] ignoreMatrix = new Boolean[(int) valued.getWidth()][(int) valued.getHeight()];
         IntStream
@@ -187,13 +367,39 @@ public class Main extends Application {
                         .range(0, (int) valued.getWidth())
                         .forEach(readX -> ignoreMatrix[readX][readY] = Boolean.FALSE));
 
+        Boolean[][] ignoreMatrix2 = new Boolean[(int) valued.getWidth()][(int) valued.getHeight()];
+        IntStream
+                .range(0, (int) valued.getHeight())
+                .parallel()
+                .forEach(readY -> IntStream
+                        .range(0, (int) valued.getWidth())
+                        .forEach(readX -> ignoreMatrix2[readX][readY] = Boolean.FALSE));
+
         Integer[][] pathMatrix = new Integer[(int) valued.getWidth()][(int) valued.getHeight()];
         Double[] currentVal = new Double[(int) valued.getWidth()];
         Double[] oldVal = new Double[(int) valued.getWidth()];
 
 
         PixelReader pixelReader = valued.getPixelReader();
-        for (int seam = 0; seam < seamesToRemove; seam++) {
+
+        // create new smaller image
+        WritableImage up = new WritableImage(
+                (int) image.getWidth(),
+                (int) image.getHeight());
+
+        PixelReader pixelReaderDDD = image.getPixelReader();
+        PixelWriter pixelWriterDDD = up.getPixelWriter();
+        Image finalImage = image;
+        IntStream
+                .range(0, (int) image.getHeight())
+                .parallel()
+                .forEach(readY -> {
+                    for (int readX = 0; readX < finalImage.getWidth(); readX++) {
+                        pixelWriterDDD.setColor(readX, readY, pixelReaderDDD.getColor(readX, readY));
+                    }
+                });
+
+        for (int seam = 0; seam < seamesToRemoveX; seam++) {
             // initial nothing removed
             for (int i = 0; i < oldVal.length; i++) {
                 oldVal[i] = colValSum(pixelReader.getColor(i, 0));
@@ -257,37 +463,15 @@ public class Main extends Application {
             }
 
             for (int i = (int) valued.getHeight() - 1; i >= 0; i--) {
+                pixelWriterDDD.setColor(minI, i, Color.RED);
                 ignoreMatrix[minI][i] = Boolean.TRUE;
                 minI += pathMatrix[minI][i];
             }
         }
-        // clean the stuff and make new image
-        // create new smaller image
-
-        WritableImage resized = new WritableImage(
-                (int) image.getWidth() - seamesToRemove,
-                (int) image.getHeight());
-
-        PixelWriter pixelWriter = resized.getPixelWriter();
-        PixelReader pixelReaderResize = image.getPixelReader();
-        Image finalImage = image;
-        IntStream
-                .range(0, (int) image.getHeight())
-                .parallel()
-                .forEach(readY -> {
-                    int shift = 0;
-                    for (int readX = 0; readX < finalImage.getWidth() - seamesToRemove; readX++) {
-                        while (ignoreMatrix[readX + shift][readY]) {
-                            shift++;
-                        }
-                        pixelWriter.setColor(readX, readY, pixelReaderResize.getColor(readX + shift, readY));
-                    }
-                });
 
 
-        /*
         //  paint removed seams red
-
+        /*
         WritableImage resized = new WritableImage(
                 (int) valued.getWidth(),
                 (int) valued.getHeight());
@@ -302,7 +486,7 @@ public class Main extends Application {
                     int shift = 0;
                     for (int readX = 0; readX < finalImage.getWidth(); readX++) {
                         if (ignoreMatrix[readX][readY]) {
-                            pixelWriter.setColor(readX, readY,Color.RED);
+                            pixelWriter.setColor(readX, readY, Color.RED);
                         } else {
                             pixelWriter.setColor(readX, readY, pixelReaderResize.getColor(readX + shift, readY));
                         }
@@ -315,8 +499,98 @@ public class Main extends Application {
                 if (ignoreMatrix[x][y]) s++;
             }
         }
-        */
-        return resized;
+        //*/
+
+        Image valued2 = valued2(image);
+        PixelReader pixelReader2 = valued.getPixelReader();
+
+        currentVal = new Double[(int) valued.getHeight()];
+        oldVal = new Double[(int) valued.getHeight()];
+
+        // initial nothing removed
+        for (int i = 0; i < oldVal.length; i++) {
+            oldVal[i] = colValSum(pixelReader2.getColor(0, i));
+            pathMatrix[0][i] = 0;
+        }
+
+        for (int jjj = 0; jjj < seamesToRemoveY; jjj++) {
+
+            for (int width = 1; width < valued.getWidth(); width++) {
+                for (int height = 0; height < valued.getHeight(); height++) {
+                    // figure the fucking skipping out
+
+                    int next = Integer.MAX_VALUE;
+                    double nextVal = Double.POSITIVE_INFINITY;
+
+                    // look up left- the counter thing till no fail
+                    int skip = -1;
+
+                    while (height + skip > 0 && ignoreMatrix2[width - 1][height + skip]) {
+                        skip--;
+                    }
+                    if (height + skip > 0) {
+                        if (oldVal[height] < nextVal) {
+                            next = skip;
+                            nextVal = oldVal[height + next];
+                        }
+                    }
+
+                    // look up if there is non above we just lose one diagonal
+                    if (!ignoreMatrix2[width - 1][height]) {
+                        if (oldVal[height] < nextVal) {
+                            next = 0;
+                            nextVal = oldVal[height];
+                        }
+                    }
+
+                    // look up right
+                    skip = 1;
+
+                    while (height + skip < valued.getHeight() && ignoreMatrix2[width - 1][height + skip]) {
+                        skip++;
+                    }
+
+                    if (height + skip < valued.getHeight()) {
+                        if (oldVal[height + skip] < nextVal) {
+                            next = skip;
+                            nextVal = oldVal[height + next];
+                        }
+                    }
+
+                    // updating current
+                    currentVal[height] = nextVal + colValSum(pixelReader2.getColor(width, height));
+                    // updating path matrix
+                    pathMatrix[width][height] = next;
+                }
+                oldVal = currentVal.clone();
+            }
+
+            // find lowest value
+            int minI = -1;
+            double minVal = Integer.MAX_VALUE;
+            for (int i = 0; i < currentVal.length; i++) {
+                if (currentVal[i] < minVal && !ignoreMatrix2[(int) valued.getWidth() - 1][i]) {
+                    minI = i;
+                    minVal = currentVal[i];
+                }
+            }
+
+            for (int i = (int) valued.getWidth() - 1; i >= 0; i--) {
+                pixelWriterDDD.setColor(i, minI, Color.LAWNGREEN);
+                ignoreMatrix2[i][minI] = Boolean.TRUE;
+                minI += pathMatrix[i][minI];
+            }
+
+        }
+        // clean the stuff and make new image
+        // create new smaller image
+
+
+        //return resizeHelper(image, seamesToRemoveX, seamesToRemoveY, ignoreMatrix, ignoreMatrix2);
+        return resizeHelperX(image, seamesToRemoveX, ignoreMatrix);
+        //return resizeHelperX2(image, seamesToRemoveX, ignoreMatrix);
+        //return resizeHelperY(image, seamesToRemoveY, ignoreMatrix2);
+        //return up;
     }
 
     @Override
@@ -330,7 +604,7 @@ public class Main extends Application {
 
         // Create Image and ImageView objects
         String f = null;
-        if (false) {
+        if (true) {
             f = "test.png"; // takes file from src folder
         } else {
             f = "test_large.png"; // takes file from src folder
@@ -349,15 +623,16 @@ public class Main extends Application {
         Scene scene = new Scene(root, image.getWidth(), image.getHeight());
         primaryStage.setTitle("Thing");
         primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
+        //primaryStage.setResizable(false);
         primaryStage.show();
-
+        int squareHelper = (int) (image.getWidth() - image.getHeight());
+        /*
         long startTime = System.nanoTime();
         long endTime = System.nanoTime();
         Double valueTime = 0.0;
         Double seamTime = 0.0;
         Double resizeTime = 0.0;
-        int squareHelper = (int) (image.getWidth() - image.getHeight());
+
         for (int i = 0; i < squareHelper; i++) {
             // find valued
             startTime = System.nanoTime();
@@ -402,12 +677,13 @@ public class Main extends Application {
         System.out.println("save");
         imageView.setImage(image);
         primaryStage.show();
-        /*
+        */
         // resize example
-        image = resize(image, squareHelper);
+
+        image = resize(image, squareHelper, 0);
+        //image = valued2(image);
         imageView.setImage(image);
         primaryStage.show();
-        */
         // save result
         String format = "png";
         File file = new File("out.png");
