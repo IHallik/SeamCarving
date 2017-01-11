@@ -2,7 +2,6 @@ import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
 import javafx.scene.image.*;
-import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -10,8 +9,7 @@ import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Objects;
+import java.net.URISyntaxException;
 import java.util.stream.IntStream;
 
 public class Main extends Application {
@@ -322,7 +320,13 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage) throws IOException, URISyntaxException {
+
+        //Grayscale n = new Grayscale("test2.png");
+        //n.toGray();
+
+        Gradient m = new Gradient("Imgest/src/grayscale-test2.png");
+        m.convert();
 
         // Create Image and ImageView objects
         String f = null;
