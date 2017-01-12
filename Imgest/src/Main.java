@@ -75,15 +75,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException, URISyntaxException {
-        String f = null;
-        if (true) {
-            f = "test.png"; // takes file from src folder
-        } else {
-            f = "test_large.png"; // takes file from src folder
-        }
+        String f = getParameters().getRaw().get(0);
 
-        int seams = -10;
-        int axis = 2;
+        int seams = Integer.parseInt(getParameters().getRaw().get(1));
+        int axis = Integer.parseInt(getParameters().getRaw().get(2));
 
         Image image = new Image(f);
         System.out.println("image loaded");
@@ -93,13 +88,12 @@ public class Main extends Application {
         StackPane root = new StackPane();
         root.getChildren().add(imageView);
         Scene scene = new Scene(root, image.getWidth(), image.getHeight());
-        primaryStage.setTitle("Thing");
+        primaryStage.setTitle("Seam Carving: Innar Hallik & Annika Laumets");
         primaryStage.setScene(scene);
         //primaryStage.setResizable(false);
         primaryStage.show();
         int squareHelper = (int) (image.getWidth() - image.getHeight());
         int dwith = (int) (image.getWidth() * 2 - image.getHeight());
-
 
 
         Image valued = valued(image);
@@ -114,12 +108,19 @@ public class Main extends Application {
 
         // save result
         String format = "png";
-        File file = new File("out.png");
+        File file = new File(f+"-changed.png");
         ImageIO.write(SwingFXUtils.fromFXImage(image, null), format, file);
         System.out.println("save done");
     }
 
     public static void main(String[] args) {
-        launch(args);
+        if (args.length != 3) {
+            System.out.println("Invalid amount of arguments.");
+            System.out.println("<image file> <seams count> <axis>");
+            System.out.println("image you want to use");
+            System.out.println("amount of seams you want to add(positive number) or to remove(negative number)");
+            System.out.println("1 for witch wise and 2 for height wise modification");
+        } else
+            launch(args);
     }
 }
